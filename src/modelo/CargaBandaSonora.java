@@ -8,6 +8,7 @@ import util.Utileria;
 import vista.CheckNodeTree;
 import vista.GUI;
 
+import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -79,11 +80,11 @@ public class CargaBandaSonora implements Runnable {
                     album.agregarCancion( new Cancion(nombre, mp3Remoto) );
                 }
             }
-            vista.tabbedPane1.setSelectedIndex(2);
             cargarJTree();
-
+            vista.tabbedPane1.setSelectedIndex(2);
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(vista, "Error al cargar banda sonora.");
         }
         System.out.println("TERMINO HILO CARGA BANDA SONORA");
     }
@@ -101,13 +102,10 @@ public class CargaBandaSonora implements Runnable {
             //e.printStackTrace();
         }
 
-
-
         vista.panelTree.add(panelT);
 
         vista.validate();
         vista.repaint();
-
 
         vista.btnBuscarBanda.setEnabled(true);
     }

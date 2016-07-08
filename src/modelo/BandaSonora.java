@@ -78,6 +78,18 @@ public class BandaSonora extends Base {
         a.setEstado(estado);
     }
 
+    /**
+     * Metodo que setea el estado de todos los albums de la banda sonora.
+     * @param est
+     */
+    public void setearEstadoTodosAlbums(boolean est) {
+        for (Album a : this.getListaAlbum()) {
+            a.setEstado(est);
+            for (Cancion c : a.getListaCanciones()) {
+                c.setEstado(est);
+            }
+        }
+    }
 
     /**
      * Metodo que retorna la cantidad total de albums y canciones de la banda sonora

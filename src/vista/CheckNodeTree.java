@@ -117,22 +117,21 @@ public class CheckNodeTree extends JPanel {
                 boolean isSelected = !node.isSelected();
                 node.setSelected(isSelected);
 
-                /* !!!gestionar click en raiz!!! */
+                if (path.getPath().length == 1) {
+                    //System.out.println("Click en raiz!");
+                    banda.setearEstadoTodosAlbums(isSelected);
 
-                // seleccionó nodo de album
-                if (path.getPath().length == 2) {
+                } else if (path.getPath().length == 2) { // seleccionó nodo de album
                     //System.out.println("SELECCIONO ALBUM!!!");
                     String nombreAlbum = path.getPath()[1].toString();
                     banda.setearEstadoAlbumJTree(nombreAlbum, isSelected);
 
-
-                // seleccionó nodo de cancion
-                } else if (path.getPath().length == 3) {
+                } else if (path.getPath().length == 3) { // seleccionó nodo de cancion
                     //System.out.println("SELECCIONO CANCION!!!");
                     String nombreAlbum   = path.getPath()[1].toString();
                     String nombreCancion = path.getPath()[2].toString();
                     banda.setearEstadoCancionJTree(nombreAlbum, nombreCancion, isSelected);
-                }
+                } else { return; }
 
                 if (node.getSelectionMode() == 4) {
                     if (isSelected) {

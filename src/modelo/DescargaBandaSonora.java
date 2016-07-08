@@ -39,7 +39,6 @@ public class DescargaBandaSonora implements Runnable {
         lblDescarga = vista.infoDescarga;
 
         descargasTotal = banda.getCantidadTotalCanciones();
-
     }
 
     /*** !!!!!!!!!!!!! VALIDAR EL MKDIR !!!!!!!!!!!!!!!!!! **/
@@ -72,7 +71,6 @@ public class DescargaBandaSonora implements Runnable {
         System.out.println("Descarga completa");
         lblDescarga.setText("Descarga completada");
         System.out.println("\n\n\n");
-
     }
 
     /*
