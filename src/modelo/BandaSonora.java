@@ -3,6 +3,10 @@ package modelo;
 import java.util.ArrayList;
 
 
+/**
+ * Clase modelo que representa una banda sonora, la cual tiene una lista de albums.
+ * Cada uno de estos ademas tiene su respectiva lista de canciones.
+ */
 public class BandaSonora extends Base {
 
     private ArrayList<Album> listaAlbum;
@@ -20,15 +24,6 @@ public class BandaSonora extends Base {
         this.listaAlbum = lA;
     }
 
-    /**
-     * Metodo que agrega un album a la lista
-     * @param a Album que será agregado.
-     */
-    public void agregarAlbum(Album a) {
-        System.out.println("Agregando..." + a);
-        this.listaAlbum.add(a);
-    }
-
     private String listaToString() {
         if (this.listaAlbum.isEmpty()) {
             return "Albums vacio";
@@ -40,14 +35,49 @@ public class BandaSonora extends Base {
         return s.toString();
     }
 
-    public ArrayList<Album> getListaAlbum() {
-        return this.listaAlbum;
+    public ArrayList<Album> getListaAlbum() { return this.listaAlbum; }
+
+
+    /**
+     * Metodo que agrega un album a la lista
+     * @param a Album que será agregado.
+     */
+    public void agregarAlbum(Album a) {
+        System.out.println("Agregando..." + a);
+        this.listaAlbum.add(a);
     }
 
-    @Override
-    public String toString() {
-        return "BandaSonora{" + super.toString() + "listaAlbum=" + this.listaToString() + '}';
+    /**
+     * Metodo que retorna boolean indicando el estado para el boton descargar.
+     * (Si no hay ningun album/cancion seleccionado retorna false, true caso contrario)
+     * @return
+     */
+    public boolean estadoBandaSonora() {
+        for (Album a : this.getListaAlbum()) {
+            if (a.getEstado()) return true;
+            for (Cancion c : a.getListaCanciones()) {
+                if (c.getEstado()) return true;
+            }
+        }
+        return false;
     }
+
+    /**
+     * Metodo que recorre todas las canciones de un album y determina el estado del mismo
+     * (si no existen canciones con estado = true el estado de album cambia a false)
+     * @param a
+     */
+    public void determinarEstadoAlbum(Album a) {
+        boolean estado = false;
+        for (Cancion c: a.getListaCanciones()) {
+            if (c.getEstado()) {
+                estado = true;
+                break;
+            }
+        }
+        a.setEstado(estado);
+    }
+
 
     /**
      * Metodo que retorna la cantidad total de albums y canciones de la banda sonora
@@ -55,13 +85,28 @@ public class BandaSonora extends Base {
      */
     public int getCantidadTotal() {
         int acc = 0;
-        for (Album a : this.listaAlbum) { // por cada album
+        for (Album a : this.getListaAlbum()) { // por cada album
             ++acc;
             for (Cancion c : a.getListaCanciones()) { // por cada cancion del album
                 ++acc;
             }
         }
         return acc;
+    }
+
+    /**
+     * Metodo que retorna la cantidad total de canciones con estado true (que serán descargadas).
+     * @return
+     */
+    public int getCantidadTotalCanciones() {
+        int acc = 0;
+        for (Album a : this.getListaAlbum()) {
+            if (!a.getEstado()) continue;
+            for (Cancion c : a.getListaCanciones()) {
+                if (c.getEstado()) acc++;
+            }
+        }
+        return  acc;
     }
 
     /**
@@ -75,5 +120,58 @@ public class BandaSonora extends Base {
         // borrando albums
         getListaAlbum().clear();
 
+    }
+
+    /**
+     *
+     * @param nombreAlbum
+     * @param estado
+     */
+    public void setearEstadoAlbumJTree(String nombreAlbum, boolean estado) {
+        for (Album a : this.getListaAlbum()) {
+            // busco el album seleccionado
+            if (a.getNombre().equals(nombreAlbum)) {
+                //System.out.println(isSelected + " album " + nombreAlbum);
+                // seteo estado del album selecionado
+                a.setEstado(estado);
+                // seteo estado de todas las canciones del album
+                for (Cancion c : a.getListaCanciones()) {
+                    c.setEstado(estado);
+                }
+                break;
+            }
+        }
+    }
+
+    /**
+     *
+     * @param nombreAlbum
+     * @param nombreCancion
+     * @param estado
+     */
+    public void setearEstadoCancionJTree(String nombreAlbum, String nombreCancion, boolean estado) {
+        for (Album a : this.getListaAlbum()) {
+            // busco el album de la cancion
+            if (a.getNombre().equals(nombreAlbum)) {
+                // si selecciono una cancion entonces activo el estado de ese album
+                if (estado && !a.getEstado()) a.setEstado(true);
+                for (Cancion c : a.getListaCanciones()) {
+                    // busco la cancion
+                    if (c.getNombre().equals(nombreCancion)) {
+                        c.setEstado(estado);
+                        this.determinarEstadoAlbum(a);
+                        //System.out.println(isSelected + " album " + nombreAlbum + " cancion " + c);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return "BandaSonora{" + super.toString() + "listaAlbum=" + this.listaToString() + '}';
     }
 }

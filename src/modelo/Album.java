@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 
 /**
- * SI CAMBIA EL ESTADO EN UN ALBUM SETEAR EL ESTADO DE TODAS LAS CANCIONES!!!!!!!!!!!!!!
+ * Clase modelo que representa un album, la cual contiene una lista de canciones.
  */
-
-
 public class Album extends Base {
 
     private ArrayList<Cancion> listaCanciones;

@@ -4,7 +4,6 @@ import modelo.*;
 import vista.GUI;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -32,10 +31,12 @@ public class EventoMain implements ActionListener {
         if (actionEvent.getSource() == vista.btnBuscarBanda) { /** click en boton buscar */
             vista.btnBuscarBanda.setEnabled(false);
             vista.btnDescargar.setEnabled(false);
-
+            vista.infoDescarga.setText("");
+            vista.tabbedPane1.setSelectedIndex(1);
             // limpio alumns y canciones de la banda si existian previamente
             banda.limpiarTodo();
 
+            /*
             try {
                 // borro el jtree del jpanel en caso de que existiera
                 this.vista.panelCentro.remove(0);
@@ -54,21 +55,25 @@ public class EventoMain implements ActionListener {
             vista.invalidate();
             vista.validate();
             vista.repaint();
+            */
+
 
             // hilo encargando del proceso de carga de la banda sonora
-            new Thread(new ManejadorBandaSonora(banda, vista)).start();
+            new Thread(new CargaBandaSonora(banda, vista)).start();
         }
 
         if (actionEvent.getSource() == vista.btnDescargar) { /** click en boton descargar */
-
             JFileChooser fc = new JFileChooser();
             fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
             fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnVal = fc.showSaveDialog(null);
+            fc.repaint();
             if(returnVal == JFileChooser.APPROVE_OPTION) {
                 File yourFolder = fc.getSelectedFile();
-                System.out.println(yourFolder);
+                new Thread(new DescargaBandaSonora(yourFolder.toString(), banda, vista)).start();
             }
+
+
             /*
             FileDialog dialogoDirectorio = new java.awt.FileDialog((java.awt.Frame) null, "Elegir ruta", FileDialog.LOAD);
             dialogoDirectorio.setVisible(true);
@@ -79,6 +84,7 @@ public class EventoMain implements ActionListener {
                 //new Thread(new DescargaBandaSonora(directorio, banda, vista)).start();
             }
             */
+
         }
     }
 }

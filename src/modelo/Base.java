@@ -1,12 +1,13 @@
 package modelo;
 
 /**
+ * Clase modelo generica la cual es heredada por BandaSonora, Album y Cancion
  * Created by martin on 4/07/16.
  */
 public abstract class Base {
+
     private String nombre;
     private String url;
-
     private boolean estado;
 
     public Base(String nombre, String url) {

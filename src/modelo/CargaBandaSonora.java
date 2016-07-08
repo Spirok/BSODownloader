@@ -11,7 +11,7 @@ import vista.GUI;
 import java.io.IOException;
 
 /**
- * Clase principal/nucleo de la aplicacion.
+ * Clase que se encarga de la carga de la banda sonora.
  * Esta destinada a procesar una banda sonora de un juego/pelicula y descargar todas sus canciones desde :
  * (http://downloads.khinsider.com/{bandaSonora}).
  * Basicamente se interpreta la banda sonora indicada en la url, se leen todos los album/s asi como sus canciones y
@@ -19,13 +19,13 @@ import java.io.IOException;
  * El procesamiento se realiza por medio de un Thread.
  * Created by martin on 5/07/16.
  */
-public class ManejadorBandaSonora implements Runnable {
+public class CargaBandaSonora implements Runnable {
 
     private BandaSonora banda;
     private GUI vista;
 
     // Constructor
-    public ManejadorBandaSonora(BandaSonora b, GUI vista) {
+    public CargaBandaSonora(BandaSonora b, GUI vista) {
         this.banda   = b;
         this.vista = vista;
     }
@@ -79,7 +79,9 @@ public class ManejadorBandaSonora implements Runnable {
                     album.agregarCancion( new Cancion(nombre, mp3Remoto) );
                 }
             }
+            vista.tabbedPane1.setSelectedIndex(2);
             cargarJTree();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,19 +89,26 @@ public class ManejadorBandaSonora implements Runnable {
     }
 
     /*
-        Metodo que carga el JTree con la vista de la banda sonora
+     * Metodo que carga el JTree con la vista de la banda sonora
      */
     private void cargarJTree() {
-        CheckNodeTree panelTree = new CheckNodeTree(banda, vista);
+        CheckNodeTree panelT = new CheckNodeTree(banda, vista);
 
-        vista.panelCentro.remove(0);
-        vista.panelCentro.add(panelTree);
+        try {
+            // borro el jtree del jpanel en caso de que existiera
+            vista.panelTree.remove(0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //e.printStackTrace();
+        }
 
-        vista.invalidate();
+
+
+        vista.panelTree.add(panelT);
+
         vista.validate();
         vista.repaint();
 
-        //vista.btnDescargar.setEnabled(true);
+
         vista.btnBuscarBanda.setEnabled(true);
     }
 }

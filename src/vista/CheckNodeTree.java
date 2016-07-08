@@ -19,8 +19,8 @@ public class CheckNodeTree extends JPanel {
 
     private BandaSonora banda;
     private CheckNode[] nodes;
-
     private GUI vista;
+
     // Constructor
     public CheckNodeTree(BandaSonora b, GUI vista) {
         banda = b;
@@ -92,20 +92,6 @@ public class CheckNodeTree extends JPanel {
         }
     }
 
-    /*
-        Metodo que retorna boolean indicando el estado para el boton descargar.
-        (Si no hay ningun album/cancion seleccionado retorna false, true caso contrario)
-     */
-    private boolean estadoBtnDescargar() {
-        for (Album a : banda.getListaAlbum()) {
-            if (a.getEstado()) return true;
-            for (Cancion c : a.getListaCanciones()) {
-                if (c.getEstado()) return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Clase interna destinada al evento click del jtree
      */
@@ -131,45 +117,21 @@ public class CheckNodeTree extends JPanel {
                 boolean isSelected = !node.isSelected();
                 node.setSelected(isSelected);
 
+                /* !!!gestionar click en raiz!!! */
+
                 // seleccionó nodo de album
                 if (path.getPath().length == 2) {
                     //System.out.println("SELECCIONO ALBUM!!!");
                     String nombreAlbum = path.getPath()[1].toString();
-                    for (Album a : banda.getListaAlbum()) {
-                        // busco el album seleccionado
-                        if (a.getNombre().equals(nombreAlbum)) {
-                            //System.out.println(isSelected + " album " + nombreAlbum);
-                            // seteo estado del album selecionado
-                            a.setEstado(isSelected);
-                            // seteo estado de todas las canciones del album
-                            for (Cancion c : a.getListaCanciones()) {
-                                c.setEstado(isSelected);
-                            }
-                            break;
-                        }
-                    }
+                    banda.setearEstadoAlbumJTree(nombreAlbum, isSelected);
+
+
                 // seleccionó nodo de cancion
                 } else if (path.getPath().length == 3) {
                     //System.out.println("SELECCIONO CANCION!!!");
                     String nombreAlbum   = path.getPath()[1].toString();
                     String nombreCancion = path.getPath()[2].toString();
-                    for (Album a : banda.getListaAlbum()) {
-                        // busco el album de la cancion
-                        if (a.getNombre().equals(nombreAlbum)) {
-                            // si selecciono una cancion entonces activo el estado de ese album
-                            if (isSelected && !a.getEstado()) a.setEstado(true);
-                            for (Cancion c : a.getListaCanciones()) {
-                                // busco la cancion
-                                if (c.getNombre().equals(nombreCancion)) {
-                                    c.setEstado(isSelected);
-                                    determinarEstadoAlbum(a);
-                                    //System.out.println(isSelected + " album " + nombreAlbum + " cancion " + c);
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
+                    banda.setearEstadoCancionJTree(nombreAlbum, nombreCancion, isSelected);
                 }
 
                 if (node.getSelectionMode() == 4) {
@@ -189,22 +151,9 @@ public class CheckNodeTree extends JPanel {
                 }
                 */
             }
-            vista.btnDescargar.setEnabled(CheckNodeTree.this.estadoBtnDescargar());
+            vista.btnDescargar.setEnabled(banda.estadoBandaSonora());
         }
     }
 
-    /*
-        Metodo que recorre todas las canciones de un album y determina el estado del mismo
-        (si no existen canciones con estado = true el estado de album cambia a false)
-     */
-    private void determinarEstadoAlbum(Album a) {
-        boolean estado = false;
-        for (Cancion c: a.getListaCanciones()) {
-            if (c.getEstado()) {
-                estado = true;
-                break;
-            }
-        }
-        a.setEstado(estado);
-    }
+
 }
