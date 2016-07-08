@@ -135,9 +135,10 @@ public class BandaSonora extends Base {
     }
 
     /**
-     *
-     * @param nombreAlbum
-     * @param estado
+     * Metodo que setea el estado de un album (y todas sus canciones).
+     * Es utilizado en la vista jtree, por eso mismo se utiliza el String nombreAlbum
+     * @param nombreAlbum String nombre del album a editar su estado.
+     * @param estado boolean estado del album y de todas sus canciones.
      */
     public void setearEstadoAlbumJTree(String nombreAlbum, boolean estado) {
         for (Album a : this.getListaAlbum()) {
@@ -156,10 +157,13 @@ public class BandaSonora extends Base {
     }
 
     /**
-     *
-     * @param nombreAlbum
-     * @param nombreCancion
-     * @param estado
+     * Metodo que setea el estado de una cancion.
+     * Es utilizado en la vista jree, por eso mismo se utiliza String nombreAlbum y nombreCancion.
+     * Si toma en cuenta que puede seleccionar una cancion de un album cuyo estado sea false, en ese
+     * caso estado de album y cancion serán true
+     * @param nombreAlbum String nombre del album
+     * @param nombreCancion String nombre de la cancion
+     * @param estado boolean estado.
      */
     public void setearEstadoCancionJTree(String nombreAlbum, String nombreCancion, boolean estado) {
         for (Album a : this.getListaAlbum()) {

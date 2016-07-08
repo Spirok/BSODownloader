@@ -109,16 +109,14 @@ public class CheckNodeTree extends JPanel {
         public void mouseClicked(MouseEvent e) {
             int y;
             int x = e.getX();
-            int row = this.tree.getRowForLocation(x, y = e.getY());
+            int row       = this.tree.getRowForLocation(x, y = e.getY());
             TreePath path = this.tree.getPathForRow(row);
             if (path != null) {
-                CheckNode node = (CheckNode)path.getLastPathComponent();
-                //System.out.println(node.toString());
+                CheckNode node     = (CheckNode)path.getLastPathComponent();
                 boolean isSelected = !node.isSelected();
                 node.setSelected(isSelected);
 
-                if (path.getPath().length == 1) {
-                    //System.out.println("Click en raiz!");
+                if (path.getPath().length == 1) { // selecciono raiz
                     banda.setearEstadoTodosAlbums(isSelected);
 
                 } else if (path.getPath().length == 2) { // seleccionó nodo de album
@@ -131,7 +129,10 @@ public class CheckNodeTree extends JPanel {
                     String nombreAlbum   = path.getPath()[1].toString();
                     String nombreCancion = path.getPath()[2].toString();
                     banda.setearEstadoCancionJTree(nombreAlbum, nombreCancion, isSelected);
-                } else { return; }
+
+                } else {
+                    return;
+                }
 
                 if (node.getSelectionMode() == 4) {
                     if (isSelected) {
