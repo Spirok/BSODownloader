@@ -32,5 +32,6 @@ public class Main {
         // creando controlador
         EventoMain ev = new EventoMain(banda, gui);
 
+
     }
 }

@@ -60,14 +60,14 @@ public class CargaBandaSonora implements Runnable {
                 Document docAlbum = Jsoup.connect(sGral).get();
                 Elements hrefEsp  = docAlbum.select("a[href]");
 
-                int garca = 0;
+                //int b = 0;
                 // por cada tag <a > en el documento
                 for (Element linkEsp : hrefEsp) {
                     String sEsp = linkEsp.toString();
                     if (!sEsp.contains(".mp3") || sEsp.contains("Download")) continue;
 
-                    garca++;
-                    if (garca == 3) { break; }
+                    //b++;
+                    //if (b == 3) { break; }
                     sEsp = Utileria.hrefToUrl(sEsp);
 
                     // procesando el documento html que contiene el audio especifico de un tema
