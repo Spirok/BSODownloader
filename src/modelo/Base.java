@@ -2,7 +2,7 @@ package modelo;
 
 /**
  * Clase modelo generica la cual es heredada por BandaSonora, Album y Cancion
- * Created by martin on 4/07/16.
+ * Created by Spirok on 4/07/16.
  */
 public abstract class Base {
 

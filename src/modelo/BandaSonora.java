@@ -6,6 +6,7 @@ import java.util.ArrayList;
 /**
  * Clase modelo que representa una banda sonora, la cual tiene una lista de albums.
  * Cada uno de estos ademas tiene su respectiva lista de canciones.
+ * Created by Spirok on 6/07/16.
  */
 public class BandaSonora extends Base {
 

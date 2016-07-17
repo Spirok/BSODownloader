@@ -18,7 +18,7 @@ import java.io.IOException;
  * Basicamente se interpreta la banda sonora indicada en la url, se leen todos los album/s asi como sus canciones y
  * se cargan en la logica/modelo de la App. (vease clases : BandaSonora, Album, Cancion).
  * El procesamiento se realiza por medio de un Thread.
- * Created by martin on 5/07/16.
+ * Created by Spirok on 5/07/16.
  */
 public class CargaBandaSonora implements Runnable {
 

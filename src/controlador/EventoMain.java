@@ -10,7 +10,7 @@ import java.io.File;
 
 /**
  * Clase encargada de los eventos de la vista principal de la App.
- * Created by martin on 5/07/16.
+ * Created by Spirok on 5/07/16.
  */
 public class EventoMain implements ActionListener {
 

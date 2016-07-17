@@ -11,7 +11,7 @@ import vista.GUI;
 /**
  * Aplicacion destinada a la facil descarga de soundtracks de peliculas/juegos de la pagina web :
  * http://downloads.khinsider.com/
- * Created by martin on 5/07/16.
+ * Created by Spirok on 5/07/16.
  */
 public class Main {
 

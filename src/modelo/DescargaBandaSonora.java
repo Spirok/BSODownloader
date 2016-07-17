@@ -16,7 +16,7 @@ import java.net.URLConnection;
  * Se ejecuta por medio de un Thread.
  * Se le indica una ruta de destino (String rutaDestino), se crean carpetas correspondientes a los albums
  * si así lo requiere. Tambien se chequea si el archivo ya fue descargado.
- * Created by martin on 6/07/16.
+ * Created by Spirok on 6/07/16.
  */
 public class DescargaBandaSonora implements Runnable {
 

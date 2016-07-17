@@ -3,7 +3,7 @@ package util;
 
 /**
  * Clase de utiliria de la App.
- * Created by martin on 5/07/16.
+ * Created by Spirok on 5/07/16.
  */
 public class Utileria {
 

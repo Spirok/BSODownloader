@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Clase modelo que representa un album, la cual contiene una lista de canciones.
+ * Created by Spirok on 6/07/16.
  */
 public class Album extends Base {
 
